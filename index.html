@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0"/>
   <title>Modernisierungskonzept — eurobahn Mitarbeiterausweis 2026</title>
   <meta name="description" content="Modernisierungskonzept für den eurobahn Mitarbeiterausweis 2026. Konzept: Damon Connor Wohlgemuth-Link, Auszubildender Triebfahrzeugführer."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -34,7 +34,6 @@
       --font-mono: 'KodeMonoLocal', 'Kode Mono', 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, 'Courier New', monospace;
     }
 
-    /* Prefer local DIN / Bahnschrift and Kode Mono when installed; fall back to system/web fonts */
     @font-face {
       font-family: 'BahnschriftLocal';
       src: local('Bahnschrift'), local('DIN1451'), local('DIN'),
@@ -72,39 +71,30 @@
     ════════════════════════════════ */
     .ambient { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
     .amb-blob { position: absolute; border-radius: 50%; filter: blur(150px); opacity: .16; }
-    .amb-1 { width: 720px; height: 720px; top: -200px; right: -180px;
-              background: radial-gradient(circle, #00a99d, transparent 68%);
-              animation: blobDrift 16s ease-in-out infinite; }
-    .amb-2 { width: 540px; height: 540px; bottom: 5%; left: -160px;
-              background: radial-gradient(circle, #162255, transparent 68%);
-              animation: blobDrift 20s ease-in-out infinite reverse; }
-    .amb-3 { width: 380px; height: 380px; top: 55%; left: 48%; opacity: .07;
-              background: radial-gradient(circle, #00a99d, transparent 68%);
-              animation: blobDrift 26s ease-in-out infinite 5s; }
+    .amb-1 { width: 720px; height: 720px; top: -200px; right: -180px; background: radial-gradient(circle, #00a99d, transparent 68%); animation: blobDrift 16s ease-in-out infinite; }
+    .amb-2 { width: 540px; height: 540px; bottom: 5%; left: -160px; background: radial-gradient(circle, #162255, transparent 68%); animation: blobDrift 20s ease-in-out infinite reverse; }
+    .amb-3 { width: 380px; height: 380px; top: 55%; left: 48%; opacity: .07; background: radial-gradient(circle, #00a99d, transparent 68%); animation: blobDrift 26s ease-in-out infinite 5s; }
     .grid-bg {
       position: fixed; inset: 0; z-index: 0; pointer-events: none;
-      background-image:
-        linear-gradient(rgba(0,169,157,.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,169,157,.03) 1px, transparent 1px);
-      background-size: 56px 56px;
-      mask-image: radial-gradient(ellipse 75% 75% at 50% 40%, black, transparent);
+      background-image: linear-gradient(rgba(0,169,157,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,169,157,.03) 1px, transparent 1px);
+      background-size: 56px 56px; mask-image: radial-gradient(ellipse 75% 75% at 50% 40%, black, transparent);
     }
 
     /* ════════════════════════════════
        LAYOUT
     ════════════════════════════════ */
-    .wrap { position: relative; z-index: 2; max-width: 1120px; margin: 0 auto; padding: 0 2rem; }
+    .wrap { position: relative; z-index: 2; max-width: 1120px; margin: 0 auto; padding: 0 1.5rem; }
 
     /* ════════════════════════════════
        HEADER
     ════════════════════════════════ */
     .site-header {
       position: sticky; top: 0; z-index: 100;
-      backdrop-filter: blur(24px) saturate(1.5);
+      backdrop-filter: blur(24px) saturate(1.5); -webkit-backdrop-filter: blur(24px) saturate(1.5);
       background: rgba(7,16,31,.82); border-bottom: 1px solid var(--border);
     }
     .header-inner {
-      max-width: 1120px; margin: 0 auto; padding: 0 2rem;
+      max-width: 1120px; margin: 0 auto; padding: 0 1.5rem;
       height: 62px; display: flex; align-items: center; justify-content: space-between;
     }
     .header-brand { display: flex; align-items: center; gap: 1rem; }
@@ -114,7 +104,15 @@
     .header-nav   { display: flex; gap: 1.75rem; }
     .header-nav a { font-size: .72rem; font-weight: 500; color: var(--text-3); letter-spacing: .05em; transition: color .2s; display: flex; align-items: center; gap: .4rem; }
     .header-nav a:hover { color: var(--teal-lt); }
-    .header-nav a i { font-size: .62rem; }
+    
+    @media (max-width: 768px) {
+      .header-label { display: none; }
+      .header-sep { display: none; }
+    }
+    @media (max-width: 640px) {
+      .header-nav a span { display: none; } /* Show only icons on very small screens */
+      .header-nav { gap: 1.25rem; }
+    }
 
     /* ════════════════════════════════
        HERO
@@ -122,7 +120,7 @@
     .hero {
       min-height: 100vh; display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      text-align: center; padding: 8rem 2rem 5rem;
+      text-align: center; padding: 8rem 1.5rem 5rem;
     }
     .hero-badge {
       display: inline-flex; align-items: center; gap: .6rem;
@@ -130,12 +128,12 @@
       border-radius: 100px; padding: .42rem 1.2rem;
       font-size: .68rem; font-weight: 700; color: var(--teal-lt);
       letter-spacing: .14em; text-transform: uppercase; margin-bottom: 2.4rem;
-      opacity: 0; animation: fadeDown .7s .1s var(--ease) forwards;
+      opacity: 0; animation: fadeDown .7s .1s var(--ease) forwards; text-align: center;
     }
     .hero-logo { margin-bottom: 2.6rem; opacity: 0; animation: fadeDown .8s .15s var(--ease) forwards; }
     .hero-logo img { height: 42px; width: auto; margin: 0 auto; }
     .hero-h1 {
-      font-size: clamp(2.4rem, 6vw, 4.8rem); font-weight: 900;
+      font-size: clamp(2.2rem, 6vw, 4.8rem); font-weight: 900;
       line-height: 1.04; letter-spacing: -.03em; color: var(--text-1);
       opacity: 0; animation: fadeDown .8s .2s var(--ease) forwards;
     }
@@ -146,18 +144,26 @@
     }
     .hero-sub {
       margin-top: 1.5rem; font-size: 1.03rem; font-weight: 300;
-      color: var(--text-2); max-width: 540px; line-height: 1.82;
+      color: var(--text-2); max-width: 540px; line-height: 1.6;
       opacity: 0; animation: fadeDown .8s .3s var(--ease) forwards;
     }
     .hero-meta {
-      margin-top: 3rem; display: flex; gap: 0; flex-wrap: wrap; justify-content: center;
+      margin-top: 3rem; display: flex; flex-wrap: wrap; justify-content: center;
       border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
       opacity: 0; animation: fadeDown .8s .4s var(--ease) forwards;
     }
-    .hm-item { padding: 1rem 1.8rem; text-align: center; border-right: 1px solid var(--border); background: var(--s1); }
+    .hm-item { padding: 1rem 1.8rem; text-align: center; border-right: 1px solid var(--border); background: var(--s1); flex: 1 1 auto; }
     .hm-item:last-child { border-right: none; }
     .hm-label { font-size: .6rem; font-weight: 700; color: var(--text-3); letter-spacing: .14em; text-transform: uppercase; margin-bottom: .35rem; }
-    .hm-val   { font-size: .85rem; font-weight: 600; color: var(--text-1); }
+    .hm-val   { font-size: .85rem; font-weight: 600; color: var(--text-1); white-space: nowrap; }
+    
+    @media (max-width: 640px) {
+      .hero-meta { border-radius: 10px; }
+      .hm-item { border-right: none; border-bottom: 1px solid var(--border); width: 100%; padding: 0.8rem 1rem; }
+      .hm-item:last-child { border-bottom: none; }
+      .hero-badge { font-size: 0.55rem; padding: 0.4rem 1rem; }
+    }
+
     .hero-scroll {
       margin-top: 4rem; display: flex; flex-direction: column; align-items: center; gap: .7rem;
       opacity: 0; animation: fadeDown .8s .9s var(--ease) forwards; color: var(--text-3);
@@ -166,12 +172,9 @@
     .scroll-chevron { animation: bounce 1.9s ease-in-out infinite; }
 
     /* ════════════════════════════════
-       CARD SHOWCASE (2D FLIP)
+       CARD SHOWCASE (INTERACTIVE)
     ═══════════════════════════════ */
-    .showcase {
-      padding: 0 0 7rem;
-      display: flex; flex-direction: column; align-items: center;
-    }
+    .showcase { padding: 0 0 7rem; display: flex; flex-direction: column; align-items: center; }
     .showcase-label {
       margin-bottom: 2rem; font-size: .65rem; font-weight: 700; color: var(--text-3);
       letter-spacing: .18em; text-transform: uppercase;
@@ -180,34 +183,28 @@
     .showcase-label i { color: var(--teal); }
 
     .card-wrap {
-      perspective: 1200px;
-      width: min(560px, 90vw);
-      cursor: default;
+      perspective: 1200px; width: min(600px, 90vw);
+      cursor: pointer; -webkit-tap-highlight-color: transparent;
     }
     .card-inner {
-      position: relative;
-      width: 100%; aspect-ratio: 1011 / 638;
-      transform-style: preserve-3d;
-      transition: transform .85s cubic-bezier(.4, .2, .2, 1);
+      position: relative; width: 100%; aspect-ratio: 1011 / 638;
+      transform-style: preserve-3d; transition: transform .85s cubic-bezier(.4, .2, .2, 1);
     }
-    .card-wrap:hover .card-inner {
-      transform: rotateY(180deg);
-    }
+    
+    /* Javascript active class instead of hover */
+    .card-inner.is-flipped { transform: rotateY(180deg); }
+
     .card-f, .card-b {
       position: absolute; inset: 0;
       backface-visibility: hidden; -webkit-backface-visibility: hidden;
       border-radius: 16px; overflow: hidden;
-      box-shadow:
-        0 4px 12px rgba(0,0,0,.18),
-        0 16px 48px rgba(0,0,0,.42),
-        0 0 0 1px rgba(255,255,255,.08);
+      box-shadow: 0 4px 12px rgba(0,0,0,.18), 0 16px 48px rgba(0,0,0,.42), 0 0 0 1px rgba(255,255,255,.08);
     }
     .card-f img, .card-b img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .card-b { transform: rotateY(180deg); }
 
     .card-hint {
-      margin-top: 1.4rem;
-      display: flex; align-items: center; gap: .6rem;
+      margin-top: 1.8rem; display: flex; align-items: center; gap: .6rem;
       font-size: .68rem; color: var(--text-3); letter-spacing: .05em;
     }
     .card-hint i { color: var(--teal); font-size: .65rem; }
@@ -215,8 +212,9 @@
     /* ════════════════════════════════
        SECTION BASE
     ════════════════════════════════ */
-     .section { padding: 6rem 0; }
-     .section + .section { border-top: 1px solid var(--border); }
+    .section { padding: 6rem 0; }
+    .section + .section { border-top: 1px solid var(--border); }
+    @media (max-width: 768px) { .section { padding: 4rem 0; } }
     
     .s-eyebrow {
       display: inline-flex; align-items: center; gap: .65rem;
@@ -226,22 +224,22 @@
     }
     .s-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--teal); opacity: .55; }
     .s-title {
-      font-size: clamp(1.75rem, 3.2vw, 2.55rem); font-weight: 800;
+      font-size: clamp(1.75rem, 4vw, 2.55rem); font-weight: 800;
       line-height: 1.12; letter-spacing: -.024em; color: var(--text-1); margin-bottom: .9rem;
     }
-    .s-lead { font-size: .97rem; font-weight: 300; color: var(--text-2); max-width: 620px; line-height: 1.85; }
+    .s-lead { font-size: .97rem; font-weight: 300; color: var(--text-2); max-width: 620px; line-height: 1.7; }
     .section-header { margin-bottom: 3.5rem; }
-
-    /* Glass card */
-    .glass { background: var(--s1); border: 1px solid var(--border); border-radius: var(--r); transition: border-color .3s var(--ease), transform .35s var(--ease), box-shadow .35s var(--ease); }
-    .glass:hover { border-color: var(--border-t); transform: translateY(-4px); box-shadow: 0 24px 56px rgba(0,0,0,.32); }
-    .glass-p { padding: 2rem; }
 
     /* Grids */
     .g3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
     .g2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
     
-    @media (max-width: 800px) { .g3 { grid-template-columns: 1fr; } .g2 { grid-template-columns: 1fr; } }
+    @media (max-width: 992px) {
+      .g3 { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) { 
+      .g3, .g2 { grid-template-columns: 1fr; } 
+    }
 
     /* ════════════════════════════════
        S1 — ZONE CARDS
@@ -260,24 +258,18 @@
       background: linear-gradient(135deg, rgba(0,169,157,.18), rgba(0,169,157,.04));
       border: 1px solid rgba(0,169,157,.28);
     }
-    .zone-badge {
-      font-family: 'JetBrains Mono', monospace; font-size: .62rem; color: var(--teal);
-      letter-spacing: .1em; background: rgba(0,169,157,.07);
-      border: 1px solid rgba(0,169,157,.14); border-radius: 5px;
-      padding: .18rem .55rem; width: fit-content;
-    }
     .zone-title { font-size: .95rem; font-weight: 700; color: var(--text-1); }
-    .zone-body  { font-size: .85rem; color: var(--text-2); line-height: 1.78; }
+    .zone-body  { font-size: .85rem; color: var(--text-2); line-height: 1.6; }
 
     /* ════════════════════════════════
        S1 — ANNOTATED CARD DIAGRAM
-       Bracket-style: left colour bar, card image, right rail
     ════════════════════════════════ */
     .anno-cards-grid {
       display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem;
       margin-top: 3.5rem; align-items: start;
     }
-    @media (max-width: 860px) { .anno-cards-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 992px) { .anno-cards-grid { grid-template-columns: 1fr; gap: 4rem; } }
+
     .anno-block { display: flex; flex-direction: column; gap: 0; }
     .anno-block-title {
       font-size: .63rem; font-weight: 700; color: var(--text-3);
@@ -289,6 +281,19 @@
       display: grid; grid-template-columns: 10px 1fr 164px;
       gap: 0; align-items: stretch;
     }
+
+    /* Mobile adjustments for diagram */
+    @media (max-width: 640px) {
+      .anno-diagram { grid-template-columns: 10px 1fr; }
+      .anno-rail { 
+        grid-column: 1 / -1; flex-direction: row !important; flex-wrap: wrap; 
+        border-left: none !important; border-top: 1px dashed rgba(255,255,255,.1); 
+        margin-top: 1rem; padding-top: 1rem !important; gap: 1rem;
+      }
+      .rail-item { flex: 1 1 30%; padding: 0 !important; }
+      .rail-item::before { display: none; }
+    }
+
     .anno-brackets { display: flex; flex-direction: column; border-radius: 4px 0 0 4px; overflow: hidden; }
     .ab-seg { flex: 1; position: relative; }
     .ab-1 { background: rgba(0,169,157,.6); }
@@ -297,6 +302,7 @@
     .ab-seg + .ab-seg::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1.5px; background: rgba(0,0,0,.3); }
     .br-front .ab-1 { flex: 21; } .br-front .ab-2 { flex: 60.5; } .br-front .ab-3 { flex: 18.5; }
     .br-back  .ab-1 { flex: 30.5; } .br-back  .ab-2 { flex: 51;   } .br-back  .ab-3 { flex: 18.5; }
+    
     .anno-card-img {
       position: relative; border-radius: 0 14px 14px 0; overflow: hidden;
       box-shadow: 0 12px 40px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.06);
@@ -307,6 +313,7 @@
     .fd-b { top: 81.5%; background: linear-gradient(90deg, rgba(100,160,255,.7), rgba(255,200,70,.8)); }
     .bd-a { top: 30.5%; background: linear-gradient(90deg, rgba(0,169,157,.7), rgba(100,160,255,.7)); }
     .bd-b { top: 81.5%; background: linear-gradient(90deg, rgba(100,160,255,.7), rgba(255,200,70,.8)); }
+    
     .anno-rail { display: flex; flex-direction: column; border-left: 1px dashed rgba(255,255,255,.1); }
     .rail-item { display: flex; align-items: center; padding: 0 0 0 .95rem; position: relative; }
     .rail-item::before {
@@ -319,6 +326,7 @@
     .rail-item-3::before { background: rgb(255,200,70); }
     .rail-front .rail-item-1 { flex: 21; } .rail-front .rail-item-2 { flex: 60.5; } .rail-front .rail-item-3 { flex: 18.5; }
     .rail-back  .rail-item-1 { flex: 30.5; } .rail-back  .rail-item-2 { flex: 51;   } .rail-back  .rail-item-3 { flex: 18.5; }
+    
     .rail-label-num {
       font-family: 'JetBrains Mono', monospace; font-size: .55rem; font-weight: 700;
       letter-spacing: .12em; text-transform: uppercase; margin-bottom: .18rem; line-height: 1;
@@ -337,22 +345,35 @@
     .sec-bridge { display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,.12); border-left: 1px solid var(--border); border-right: 1px solid var(--border); gap: .6rem; }
     .sec-bridge-line { width: 1px; flex: 1; background: linear-gradient(180deg, rgba(0,169,157,.5), rgba(126,182,255,.5)); }
     .sec-bridge-icon { font-size: .9rem; color: var(--text-3); }
+    
+    @media (max-width: 768px) {
+      .sec-diagram { grid-template-columns: 1fr; }
+      .sec-bridge { flex-direction: row; border-left: none; border-right: none; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 1rem 0; height: 60px;}
+      .sec-bridge-line { width: 100%; height: 1px; flex: 1; background: linear-gradient(90deg, rgba(0,169,157,.5), rgba(126,182,255,.5)); }
+    }
+
     .sec-tag { font-size: .6rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin-bottom: .85rem; display: flex; align-items: center; gap: .45rem; }
     .sec-tag::before { content: ''; width: 18px; height: 1px; background: currentColor; opacity: .5; }
     .sec-pane.p1 .sec-tag { color: var(--teal); }
     .sec-pane.p2 .sec-tag { color: #7eb6ff; }
     .sec-pane h4 { font-size: .93rem; font-weight: 700; color: var(--text-1); margin-bottom: .55rem; }
-    .sec-pane p  { font-size: .83rem; color: var(--text-2); line-height: 1.76; }
-    .data-token  { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: .88rem; font-weight: 600; padding: .38rem .95rem; border-radius: 8px; margin: .65rem 0; }
+    .sec-pane p  { font-size: .83rem; color: var(--text-2); line-height: 1.6; }
+    .data-token  { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: .88rem; font-weight: 600; padding: .38rem .95rem; border-radius: 8px; margin: .65rem 0; word-break: break-all;}
+    
+    @media (max-width: 480px) { .data-token { font-size: 0.75rem; padding: 0.3rem 0.6rem; } }
+
     .dt-t { background: rgba(0,169,157,.1);  border: 1px solid rgba(0,169,157,.28);  color: var(--teal-lt); }
     .dt-b { background: rgba(126,182,255,.07); border: 1px solid rgba(126,182,255,.22); color: #aaccff; }
+    
     .prin-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.1rem; }
-    @media (max-width: 700px) { .prin-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 992px) { .prin-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .prin-grid { grid-template-columns: 1fr; } }
+    
     .prin-card { padding: 1.6rem; border: 1px solid var(--border); border-radius: var(--r); background: var(--s1); transition: border-color .3s, transform .3s; }
     .prin-card:hover { border-color: var(--border-t); transform: translateY(-3px); }
     .prin-icon { width: 40px; height: 40px; border-radius: 11px; margin-bottom: .85rem; display: flex; align-items: center; justify-content: center; font-size: .95rem; color: var(--teal-lt); background: linear-gradient(135deg, rgba(0,169,157,.16), rgba(0,169,157,.03)); border: 1px solid rgba(0,169,157,.22); }
     .prin-title { font-size: .88rem; font-weight: 700; color: var(--text-1); margin-bottom: .45rem; }
-    .prin-body  { font-size: .8rem; color: var(--text-2); line-height: 1.72; }
+    .prin-body  { font-size: .8rem; color: var(--text-2); line-height: 1.6; }
 
     /* ════════════════════════════════
        S3 — USABILITY
@@ -364,46 +385,53 @@
     .nfc-ring:nth-child(2) { animation-delay: .93s; }
     .nfc-ring:nth-child(3) { animation-delay: 1.86s; }
     .nfc-panel h3 { font-size: 1.05rem; font-weight: 700; color: var(--text-1); margin-bottom: .5rem; }
-    .nfc-panel p  { font-size: .83rem; color: var(--text-2); max-width: 256px; line-height: 1.72; }
+    .nfc-panel p  { font-size: .83rem; color: var(--text-2); max-width: 256px; line-height: 1.6; }
+    
     .scen-list { display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; }
     .scen-item { display: flex; gap: 1.2rem; align-items: flex-start; padding: 1.3rem 1.65rem; background: var(--s1); border-bottom: 1px solid var(--border); transition: background .2s; }
     .scen-item:last-child { border-bottom: none; }
     .scen-item:hover { background: var(--s2); }
     .scen-icon-wrap { width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: .95rem; color: var(--teal-lt); background: rgba(0,169,157,.1); border: 1px solid rgba(0,169,157,.2); }
     .scen-title { font-size: .65rem; font-weight: 700; color: var(--teal); letter-spacing: .1em; text-transform: uppercase; margin-bottom: .28rem; }
-    .scen-body  { font-size: .83rem; color: var(--text-2); line-height: 1.7; }
-    .bilingual { margin-top: 1.2rem; padding: 1.1rem 1.5rem; background: rgba(0,169,157,.05); border: 1px solid rgba(0,169,157,.16); border-radius: 10px; font-size: .81rem; color: var(--text-2); line-height: 1.76; }
+    .scen-body  { font-size: .83rem; color: var(--text-2); line-height: 1.6; }
+    .bilingual { margin-top: 1.2rem; padding: 1.1rem 1.5rem; background: rgba(0,169,157,.05); border: 1px solid rgba(0,169,157,.16); border-radius: 10px; font-size: .81rem; color: var(--text-2); line-height: 1.6; }
     .bilingual strong { color: var(--teal-lt); }
 
     /* ════════════════════════════════
        S4 — TECH
     ════════════════════════════════ */
-    .tbl-wrap { border-radius: var(--r); overflow: hidden; border: 1px solid var(--border); margin-bottom: 2rem; }
-    table { width: 100%; border-collapse: collapse; }
+    .tbl-wrap { border-radius: var(--r); overflow: hidden; border: 1px solid var(--border); margin-bottom: 2rem; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 500px; }
     thead th { text-align: left; font-size: .61rem; font-weight: 700; color: var(--teal); letter-spacing: .12em; text-transform: uppercase; padding: .85rem 1.4rem; background: rgba(0,169,157,.06); border-bottom: 1px solid var(--border); }
-    tbody td { padding: .95rem 1.4rem; font-size: .83rem; color: var(--text-2); border-bottom: 1px solid rgba(255,255,255,.04); vertical-align: top; line-height: 1.66; }
+    tbody td { padding: .95rem 1.4rem; font-size: .83rem; color: var(--text-2); border-bottom: 1px solid rgba(255,255,255,.04); vertical-align: top; line-height: 1.6; }
     tbody tr:last-child td { border-bottom: none; }
     tbody tr:hover td { background: var(--s1); }
     .td-m { font-family: 'JetBrains Mono', monospace; font-size: .76rem; color: var(--teal-lt); display: block; margin-top: .2rem; }
     .td-badge { display: inline-block; font-size: .58rem; font-weight: 700; letter-spacing: .07em; padding: .14rem .5rem; border-radius: 4px; background: rgba(126,182,255,.07); border: 1px solid rgba(126,182,255,.18); color: #aaccff; white-space: nowrap; }
+    
     .tech-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.2rem; }
-    @media (max-width: 780px) { .tech-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 992px) { .tech-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .tech-grid { grid-template-columns: 1fr; } }
+    
     .tech-card { padding: 1.75rem; border: 1px solid var(--border); border-radius: var(--r); background: var(--s1); transition: border-color .3s, transform .3s; }
     .tech-card:hover { border-color: var(--border-t); transform: translateY(-3px); }
     .tech-icon { width: 44px; height: 44px; border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; font-size: 1rem; color: var(--teal-lt); background: linear-gradient(135deg, rgba(0,169,157,.16), rgba(0,169,157,.03)); border: 1px solid rgba(0,169,157,.2); }
     .tech-title { font-size: .9rem; font-weight: 700; color: var(--text-1); margin-bottom: .5rem; }
-    .tech-body  { font-size: .8rem; color: var(--text-2); line-height: 1.75; }
+    .tech-body  { font-size: .8rem; color: var(--text-2); line-height: 1.6; }
 
     /* ════════════════════════════════
        CONCLUSION
     ════════════════════════════════ */
     .conclusion { padding: 6rem 0; border-top: 1px solid var(--border); }
-    .concl-inner { background: linear-gradient(135deg, rgba(0,169,157,.07), rgba(22,34,85,.14)); border: 1px solid rgba(0,169,157,.18); border-radius: 24px; padding: 3.5rem 3rem; text-align: center; }
+    .concl-inner { background: linear-gradient(135deg, rgba(0,169,157,.07), rgba(22,34,85,.14)); border: 1px solid rgba(0,169,157,.18); border-radius: 24px; padding: 3.5rem 2rem; text-align: center; }
     .concl-icon { width: 54px; height: 54px; border-radius: 15px; margin: 0 auto 1.4rem; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; color: var(--teal-lt); background: linear-gradient(135deg, rgba(0,169,157,.2), rgba(0,169,157,.04)); border: 1px solid rgba(0,169,157,.28); }
     .concl-title { font-size: clamp(1.45rem, 2.8vw, 2.05rem); font-weight: 800; color: var(--text-1); margin-bottom: .95rem; letter-spacing: -.022em; }
-    .concl-body  { font-size: .91rem; color: var(--text-2); max-width: 680px; margin: 0 auto 2.5rem; line-height: 1.87; }
+    .concl-body  { font-size: .91rem; color: var(--text-2); max-width: 680px; margin: 0 auto 2.5rem; line-height: 1.7; }
+    
     .concl-meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; max-width: 860px; margin: 0 auto; }
-    @media (max-width: 700px) { .concl-meta { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 768px) { .concl-meta { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .concl-meta { grid-template-columns: 1fr; } }
+    
     .cm-item  { padding: 1.1rem 1.2rem; text-align: center; background: var(--s1); }
     .cm-label { font-size: .57rem; font-weight: 700; color: var(--text-3); letter-spacing: .12em; text-transform: uppercase; margin-bottom: .32rem; }
     .cm-val   { font-size: .76rem; font-weight: 600; color: var(--teal-lt); line-height: 1.4; }
@@ -412,11 +440,16 @@
        FOOTER
     ════════════════════════════════ */
     footer { border-top: 1px solid var(--border); padding: 2.2rem 0; position: relative; z-index: 2; }
-    .footer-inner { max-width: 1120px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-inner { max-width: 1120px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
     .footer-left  { display: flex; align-items: center; gap: 1rem; }
     .footer-logo  { height: 18px; width: auto; opacity: 1; }
     .footer-text  { font-size: .71rem; color: var(--text-3); line-height: 1.6; }
-    .footer-right { font-size: .66rem; color: var(--text-3); text-align: right; line-height: 1.65; }
+    .footer-right { font-size: .66rem; color: var(--text-3); text-align: right; line-height: 1.6; }
+    
+    @media (max-width: 640px) {
+      .footer-inner { flex-direction: column; align-items: flex-start; text-align: left; }
+      .footer-right { text-align: left; }
+    }
 
     /* ════════════════════════════════
        SCROLL REVEAL
@@ -445,17 +478,6 @@
       0%   { width:56px;  height:56px;  opacity:.8; transform:translate(-50%,-50%); }
       100% { width:140px; height:140px; opacity:0;  transform:translate(-50%,-50%); }
     }
-    /* Card gentle floating — only when not hovered */
-    @keyframes cardFloat {
-      0%,100% { transform: rotateX(6deg) rotateY(-14deg) translateY(0px); }
-      25%     { transform: rotateX(7deg) rotateY(-12deg) translateY(-10px); }
-      50%     { transform: rotateX(5deg) rotateY(-16deg) translateY(-18px); }
-      75%     { transform: rotateX(8deg) rotateY(-11deg) translateY(-8px); }
-    }
-    @keyframes shadowPulse {
-      0%,100% { opacity: .7; transform: scaleX(1); }
-      50%     { opacity: .4; transform: scaleX(.88); }
-    }
   </style>
 </head>
 <body>
@@ -472,15 +494,15 @@
 <header class="site-header" role="banner">
   <div class="header-inner">
     <div class="header-brand">
-      <img src="logo-eurobahn-weiss.svg" alt="eurobahn" class="header-logo"/>
+      <img src="logo-eurobahn-weiss.svg" alt="eurobahn" class="header-logo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Eurobahn_Logo.svg/512px-Eurobahn_Logo.svg.png'"/>
       <div class="header-sep" aria-hidden="true"></div>
       <span class="header-label">Modernisierungskonzept 2026</span>
     </div>
     <nav class="header-nav" aria-label="Abschnitte">
-      <a href="#s1"><i class="fa-solid fa-layer-group" aria-hidden="true"></i>Hierarchie</a>
-      <a href="#s2"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i>Sicherheit</a>
-      <a href="#s3"><i class="fa-solid fa-hand-pointer" aria-hidden="true"></i>Usability</a>
-      <a href="#s4"><i class="fa-solid fa-microchip" aria-hidden="true"></i>Technik</a>
+      <a href="#s1"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span>Hierarchie</span></a>
+      <a href="#s2"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i><span>Sicherheit</span></a>
+      <a href="#s3"><i class="fa-solid fa-hand-pointer" aria-hidden="true"></i><span>Usability</span></a>
+      <a href="#s4"><i class="fa-solid fa-microchip" aria-hidden="true"></i><span>Technik</span></a>
     </nav>
   </div>
 </header>
@@ -489,10 +511,10 @@
 <section class="hero" aria-labelledby="hero-h1">
   <div class="wrap" style="display:flex;flex-direction:column;align-items:center;">
     <div class="hero-badge">
-      eurobahn GmbH &amp; Co. KG &nbsp;·&nbsp; Konzept-Dokumentation 2026
+      eurobahn GmbH &amp; Co. KG &nbsp;·&nbsp; Konzept 2026
     </div>
     <div class="hero-logo">
-      <img src="logo-eurobahn-weiss.svg" alt="eurobahn"/>
+      <img src="logo-eurobahn-weiss.svg" alt="eurobahn" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Eurobahn_Logo.svg/512px-Eurobahn_Logo.svg.png'"/>
     </div>
     <h1 class="hero-h1" id="hero-h1">
       Mitarbeiterausweis<br/><em>Modernisierungskonzept</em>
@@ -531,21 +553,21 @@
   <div class="wrap" style="display:flex;flex-direction:column;align-items:center;">
     <p class="showcase-label">
       <i class="fa-regular fa-hand-pointer" aria-hidden="true"></i>
-      Hover — Karte umdrehen
+      Tap / Klick — Karte umdrehen
     </p>
-    <div class="card-wrap" role="img" aria-label="Vorder- und Rückseite des Mitarbeiterausweises">
+    <div class="card-wrap" role="button" aria-label="Vorder- und Rückseite des Mitarbeiterausweises (Klicken zum Wenden)" onclick="flipCard()">
       <div class="card-inner">
         <div class="card-f">
-          <img src="card_front.png" alt="Vorderseite: eurobahn Mitarbeiterausweis" loading="eager" fetchpriority="high"/>
+          <img src="card_front.png" alt="Vorderseite: eurobahn Mitarbeiterausweis" loading="eager" fetchpriority="high" onerror="this.src='https://placehold.co/1011x638/1e293b/ffffff?text=Vorderseite'"/>
         </div>
         <div class="card-b">
-          <img src="card_back.png" alt="Rückseite: eurobahn Mitarbeiterausweis" loading="lazy"/>
+          <img src="card_back.png" alt="Rückseite: eurobahn Mitarbeiterausweis" loading="lazy" onerror="this.src='https://placehold.co/1011x638/1e293b/ffffff?text=Rückseite'"/>
         </div>
       </div>
     </div>
     <div class="card-hint">
       <i class="fa-solid fa-rotate" aria-hidden="true"></i>
-      Hover zeigt Rückseite
+      Interaktive Live-Vorschau
     </div>
   </div>
 </section>
@@ -567,19 +589,16 @@
     <div class="g3 reveal rd1">
       <div class="zone-card">
         <div class="zone-num">01</div>
-        <!-- <div class="zone-badge">Erkennungszeit 0–2 s</div> -->
         <div class="zone-title">Primärebene — Unternehmensidentität</div>
         <p class="zone-body">Das eurobahn-Logo ist nach ISO/IEC 7810 dominant rechts oben platziert — erkennbar auch bei schräger Sichtlinie oder teilweiser Verdeckung. Maximale Identifikationsgeschwindigkeit für Sicherheitspersonal.</p>
       </div>
       <div class="zone-card">
         <div class="zone-num">02</div>
-        <!-- <div class="zone-badge">Erkennungszeit 2–5 s</div> -->
         <div class="zone-title">Sekundärebene — Personenidentifikation</div>
         <p class="zone-body">Foto-Modul links, Textblock rechts entspricht dem F-Muster (Nielsen Eye-Tracking). Gesicht → Name → Funktion in einer Lesebewegung. Kognitive Last auf ein Minimum reduziert.</p>
       </div>
       <div class="zone-card">
         <div class="zone-num">03</div>
-        <!-- <div class="zone-badge">Erkennungszeit 5+ s</div> -->
         <div class="zone-title">Tertiärebene — Maschinelle Daten</div>
         <p class="zone-body">Personalnummer, Gültigkeitsdatum und NFC-Kennzeichnung in der Fußzone — konform mit ISO/IEC 7501. Der Farbbalken kennzeichnet die Kartenklasse im mehrstufigen Zugangssystem.</p>
       </div>
@@ -599,7 +618,7 @@
             <div class="ab-seg ab-3"></div>
           </div>
           <div class="anno-card-img">
-            <img src="card_front.png" alt="Vorderseite mit Zonenkennzeichnung" loading="lazy"/>
+            <img src="card_front.png" alt="Vorderseite mit Zonenkennzeichnung" loading="lazy" onerror="this.src='https://placehold.co/1011x638/1e293b/ffffff?text=Vorderseite'"/>
             <div class="anno-divider fd-a" aria-hidden="true"></div>
             <div class="anno-divider fd-b" aria-hidden="true"></div>
           </div>
@@ -642,7 +661,7 @@
             <div class="ab-seg ab-3"></div>
           </div>
           <div class="anno-card-img">
-            <img src="card_back.png" alt="Rückseite mit Zonenkennzeichnung" loading="lazy"/>
+            <img src="card_back.png" alt="Rückseite mit Zonenkennzeichnung" loading="lazy" onerror="this.src='https://placehold.co/1011x638/1e293b/ffffff?text=Rückseite'"/>
             <div class="anno-divider bd-a" aria-hidden="true"></div>
             <div class="anno-divider bd-b" aria-hidden="true"></div>
           </div>
@@ -692,7 +711,7 @@
       <div class="sec-pane p1">
         <div class="sec-tag">Schicht 1 · Vorderseite</div>
         <h4>Personalkennung (EMP-ID)</h4>
-        <div class="data-token dt-t">123456</div>
+        <div class="data-token dt-t">102421</div>
         <p>Die Personalnummer ist die zentrale HR-Stammdaten-ID für die interne Zuordnung. Sie bildet die Basis für Auswertungen und organisatorische Zuordnung.</p>
       </div>
       <div class="sec-bridge" aria-hidden="true">
@@ -703,8 +722,8 @@
       <div class="sec-pane p2">
         <div class="sec-tag">Schicht 2 · Rückseite</div>
         <h4>Kartenkennung (proprietär)</h4>
-        <div class="data-token dt-b">ERB-123456-260101-A1B2</div>
-        <p>Systemgenerierte Referenzkennung mit integrierter Datumssignatur (260101 = Ausgabe 01.01.26) und randomisiertem Suffix.</p>
+        <div class="data-token dt-b">ERB-102421-260605-X7Y2</div>
+        <p>Systemgenerierte Referenzkennung mit integrierter Datumssignatur (05.06.26) und randomisiertem Suffix als Sicherheits-Prüfsumme.</p>
       </div>
     </div>
     <div class="prin-grid reveal rd2">
@@ -749,7 +768,7 @@
           <div class="nfc-core"><i class="fa-solid fa-wifi"></i></div>
         </div>
         <h3>NFC-Affordance · Vorderseite</h3>
-        <p>Der Ausweis wird in natürlicher Greifhaltung an das Lesegerät gehalten — Vorderseite zum Leser. Das NFC-Symbol ist ein visueller Verhaltensauslöser. Fehlbedienungen und Wartezeiten werden systematisch eliminiert.</p>
+        <p>Das dezente, graue NFC-Logo auf der Vorderseite fungiert als visueller Verhaltensauslöser (Affordance). Es kommuniziert die Funktion, ohne das Corporate Design zu stören. Fehlbedienungen an Terminals werden systematisch eliminiert.</p>
       </div>
       <div>
         <div class="scen-list" role="list">
@@ -764,21 +783,21 @@
             <div class="scen-icon-wrap"><i class="fa-solid fa-database" aria-hidden="true"></i></div>
             <div>
               <div class="scen-title">Datenspeicherung</div>
-              <p class="scen-body">Alle visuell dargestellten Angaben werden zusätzlich direkt auf der Karte gespeichert. Dadurch sind spätere Abgleiche, Plausibilitätsprüfungen und eine konsistente Dokumentation jederzeit möglich.</p>
+              <p class="scen-body">Alle visuell dargestellten Angaben werden zusätzlich sicher auf der Karte gespeichert. Dadurch sind spätere Abgleiche, Plausibilitätsprüfungen und eine konsistente Dokumentation jederzeit möglich.</p>
             </div>
           </div>
           <div class="scen-item" role="listitem">
             <div class="scen-icon-wrap"><i class="fa-solid fa-print" aria-hidden="true"></i></div>
             <div>
               <div class="scen-title">Druckerfreigabe</div>
-              <p class="scen-body">Die Karte übernimmt die direkte Zugangs- und Freigabeverwaltung für den Drucker, statt eines separat ausgehändigten NFC-Chips. Berechtigungen lassen sich so zentral über den Ausweis steuern.</p>
+              <p class="scen-body">Die Karte übernimmt die direkte Zugangs- und Freigabeverwaltung für den Drucker (Pull-Printing), statt eines separat ausgehändigten NFC-Chips.</p>
             </div>
           </div>
         </div>
         <div class="bilingual" role="note">
           <strong><i class="fa-solid fa-language" aria-hidden="true"></i> Zweisprachigkeit (DE/EN):</strong>
           Alle Feldbezeichner sind bilingual geführt gemäß EU-Richtlinie 2016/798 (Eisenbahnsicherheit).
-          Sicherstellung der Lesbarkeit gegenüber internationalen Sicherheitsdiensten und europäischen Aufsichtsbehörden.
+          Sicherstellung der Lesbarkeit gegenüber internationalen Sicherheitsdiensten.
         </div>
       </div>
     </div>
@@ -809,29 +828,24 @@
         </thead>
         <tbody>
           <tr>
-            <td>Karten-ID Rückseite<span class="td-m">ERB-123456-260101-A1B2</span></td>
-            <td>UID des Chips — 7-Byte-Kennung, Applikationskennung (AID)</td>
+            <td>Karten-ID Rückseite<span class="td-m">ERB-102421-260605-X7Y2</span></td>
+            <td>UID des Chips — 7-Byte-Kennung, proprietär verknüpft</td>
             <td><span class="td-badge">ISO 14443-3</span></td>
           </tr>
           <tr>
-            <td>NFC-Kennzeichnung Vorderseite</td>
-            <td>Kontaktlose Kommunikation bei 13,56 MHz, max. Reichweite 10 cm</td>
-            <td><span class="td-badge">ISO 14443-A</span></td>
+            <td>Typografie System-Daten</td>
+            <td>Kode Mono (Monospace) für exakte Zeichenbreite beim Batch-Thermotransferdruck</td>
+            <td><span class="td-badge">CMS Print Format</span></td>
           </tr>
           <tr>
-            <td>Gültigkeitsdatum<span class="td-m">01-01-2027</span></td>
-            <td>Zertifikats-Ablaufdatum im Chip-Speicher</td>
+            <td>Gültigkeitsdatum<span class="td-m">05-06-2027</span></td>
+            <td>Zertifikats-Ablaufdatum im Chip-Speicher (ISO 8601 Fallback)</td>
             <td><span class="td-badge">MIFARE DESFire EV3</span></td>
           </tr>
           <tr>
-            <td>Karten-Nr.-Struktur</td>
-            <td>Applikationskennung (AID) nach DESFire Applikationsstruktur (MAD)</td>
-            <td><span class="td-badge">MIFARE App Directory</span></td>
-          </tr>
-          <tr>
-            <td>Weißes Kartenlayout</td>
-            <td>Retransfer-Druck 600 dpi — HID FARGO HDP5000 / Matica XID8300</td>
-            <td><span class="td-badge">ISO/IEC 7810 ID-1</span></td>
+            <td>Typografie Personalien</td>
+            <td>Bahnschrift (basierend auf DIN 1451) für klassische Verkehrsschrift-Authentizität</td>
+            <td><span class="td-badge">Corporate Identity</span></td>
           </tr>
         </tbody>
       </table>
@@ -844,8 +858,8 @@
       </div>
       <div class="tech-card">
         <div class="tech-icon"><i class="fa-solid fa-print" aria-hidden="true"></i></div>
-        <div class="tech-title">600 dpi Retransfer-Druck</div>
-        <p class="tech-body">Vollflächige, glatte Druckschicht mit Pantone-validierter Farbwiedergabe ohne Farbdrift über Chargen. Overlay-Laminat für Hologramm-/UV-Druck als optionale Ausbaustufe vorgesehen.</p>
+        <div class="tech-title">Zweistufiger Druck</div>
+        <p class="tech-body">Offset-Druck für das Grundlayout (Bahnschrift & Farben). Thermotransfer-Druck für die variablen Personaldaten (Kode Mono). Dies garantiert höchste Kosteneffizienz für HR.</p>
       </div>
       <div class="tech-card">
         <div class="tech-icon"><i class="fa-solid fa-mobile-screen-button" aria-hidden="true"></i></div>
@@ -872,15 +886,15 @@
       <div class="concl-meta">
         <div class="cm-item">
           <div class="cm-label">Norm-Compliance</div>
-          <div class="cm-val">ISO/IEC 7810 · ISO 14443 · NIST SP 800-53</div>
+          <div class="cm-val">ISO/IEC 7810 · ISO 14443</div>
         </div>
         <div class="cm-item">
-          <div class="cm-label">Chip-Standard</div>
-          <div class="cm-val">MIFARE DESFire EV3 · AES-128</div>
+          <div class="cm-label">Typografie</div>
+          <div class="cm-val">Bahnschrift &amp; Kode Mono</div>
         </div>
         <div class="cm-item">
           <div class="cm-label">Drucktechnik</div>
-          <div class="cm-val">Retransfer · 600 dpi · Pantone</div>
+          <div class="cm-val">Hybrid (Offset + Thermo)</div>
         </div>
         <div class="cm-item">
           <div class="cm-label">Rechtsbasis</div>
@@ -895,7 +909,7 @@
 <footer role="contentinfo">
   <div class="footer-inner">
     <div class="footer-left">
-      <img src="logo-eurobahn-weiss.svg" alt="eurobahn" class="footer-logo"/>
+      <img src="logo-eurobahn-weiss.svg" alt="eurobahn" class="footer-logo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Eurobahn_Logo.svg/512px-Eurobahn_Logo.svg.png'"/>
       <div class="footer-text">
         <strong style="color:var(--text-2);">Modernisierungskonzept — Vertrauliches Dokument</strong><br/>
         eurobahn GmbH &amp; Co. KG
@@ -914,6 +928,12 @@
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* ── Flip Card ───────────────────────────────── */
+  function flipCard() {
+    const card = document.querySelector('.card-inner');
+    if(card) card.classList.toggle('is-flipped');
+  }
 </script>
 </body>
 </html>
