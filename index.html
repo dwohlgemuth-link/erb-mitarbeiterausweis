@@ -330,7 +330,7 @@
     .rail-label-sub   { font-size: .58rem; color: var(--text-3); line-height: 1.35; margin-top: .12rem; }
 
     /* ════════════════════════════════
-       S3 — SECURITY
+       S2 — SECURITY
     ════════════════════════════════ */
     .sec-diagram { display: grid; grid-template-columns: 1fr 44px 1fr; gap: 0; border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; margin-bottom: 1.5rem; }
     .sec-pane { padding: 2rem 1.75rem; background: var(--s1); }
@@ -355,7 +355,7 @@
     .prin-body  { font-size: .8rem; color: var(--text-2); line-height: 1.72; }
 
     /* ════════════════════════════════
-       S4 — USABILITY
+       S3 — USABILITY
     ════════════════════════════════ */
     .nfc-panel { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3rem 2rem; text-align: center; background: var(--s1); border: 1px solid var(--border); border-radius: var(--r); }
     .nfc-orbit { position: relative; width: 136px; height: 136px; margin-bottom: 1.8rem; }
@@ -376,7 +376,7 @@
     .bilingual strong { color: var(--teal-lt); }
 
     /* ════════════════════════════════
-       S5 — TECH
+       S4 — TECH
     ════════════════════════════════ */
     .tbl-wrap { border-radius: var(--r); overflow: hidden; border: 1px solid var(--border); margin-bottom: 2rem; }
     table { width: 100%; border-collapse: collapse; }
@@ -478,9 +478,9 @@
     </div>
     <nav class="header-nav" aria-label="Abschnitte">
       <a href="#s1"><i class="fa-solid fa-layer-group" aria-hidden="true"></i>Hierarchie</a>
-      <a href="#s3"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i>Sicherheit</a>
-      <a href="#s4"><i class="fa-solid fa-hand-pointer" aria-hidden="true"></i>Usability</a>
-      <a href="#s5"><i class="fa-solid fa-microchip" aria-hidden="true"></i>Technik</a>
+      <a href="#s2"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i>Sicherheit</a>
+      <a href="#s3"><i class="fa-solid fa-hand-pointer" aria-hidden="true"></i>Usability</a>
+      <a href="#s4"><i class="fa-solid fa-microchip" aria-hidden="true"></i>Technik</a>
     </nav>
   </div>
 </header>
@@ -676,13 +676,13 @@
 </section>
 
 <!-- ════════════════════════════════
-     S3 — SICHERHEIT
+     S2 — SICHERHEIT
 ═════════════════════════════════ -->
-<section class="section" id="s3" aria-labelledby="s3-title">
+<section class="section" id="s2" aria-labelledby="s2-title">
   <div class="wrap">
     <div class="section-header reveal">
       <div class="s-eyebrow">02 / 04</div>
-      <h2 class="s-title" id="s3-title">Sicherheits- &amp;<br/>Compliance-Architektur</h2>
+      <h2 class="s-title" id="s2-title">Sicherheits- &amp;<br/>Compliance-Architektur</h2>
       <p class="s-lead">
         Das zweischichtige Identifikationsmodell entspricht dem NIST SP 800-53 <em>Principle of Least Privilege</em>.
         Ein einziges kompromittiertes Datum genügt nicht, um Zugang zu einem Kernsystem zu erlangen.
@@ -728,13 +728,13 @@
 </section>
 
 <!-- ════════════════════════════════
-     S4 — USABILITY
+     S3 — USABILITY
 ═════════════════════════════════ -->
-<section class="section" id="s4" aria-labelledby="s4-title">
+<section class="section" id="s3" aria-labelledby="s3-title">
   <div class="wrap">
     <div class="section-header reveal">
       <div class="s-eyebrow">03 / 04</div>
-      <h2 class="s-title" id="s4-title">Usability &amp;<br/>User Experience</h2>
+      <h2 class="s-title" id="s3-title">Usability &amp;<br/>User Experience</h2>
       <p class="s-lead">
         Jede Designentscheidung ist auf den operativen Bahnbetrieb ausgerichtet —
         von der NFC-Affordance-Platzierung bis zur Zweisprachigkeit als normative EU-Anforderung.
@@ -786,13 +786,13 @@
 </section>
 
 <!-- ════════════════════════════════
-     S5 — TECHNIK
+     S4 — TECHNIK
 ═════════════════════════════════ -->
-<section class="section" id="s5" aria-labelledby="s5-title">
+<section class="section" id="s4" aria-labelledby="s4-title">
   <div class="wrap">
     <div class="section-header reveal">
       <div class="s-eyebrow">04 / 04</div>
-      <h2 class="s-title" id="s5-title">Technische<br/>Implementierung</h2>
+      <h2 class="s-title" id="s4-title">Technische<br/>Implementierung</h2>
       <p class="s-lead">
         Das Design ist konzeptionell für <strong style="color:var(--teal-lt);">MIFARE DESFire EV3</strong> ausgelegt —
         dem aktuellen Industriestandard für hochsichere Zugangskarten im ÖPNV- und Unternehmensbereich.
