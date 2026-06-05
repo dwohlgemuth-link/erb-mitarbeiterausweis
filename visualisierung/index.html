@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>3D Visualisierung — eurobahn Mitarbeiterausweis</title>
+    <meta name="description" content="Interaktives 3D-Modell des eurobahn Mitarbeiterausweises 2026.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        crossorigin="anonymous" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* Theme Tokens matching the main concept */
+        :root {
+            --navy: #0f1e4a;
+            --teal: #00a99d;
+            --teal-lt: #2ec4b9;
+            --text-1: #f0f4ff;
+            --text-2: #a8b8d8;
+            --text-3: #62748e;
+            --bg: #07101f;
+            --border: rgba(255, 255, 255, .08);
+            --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg);
+            color: var(--text-1);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Ambient Background */
+        .ambient {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .amb-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(150px);
+            opacity: .16;
+        }
+
+        .amb-1 {
+            width: 720px;
+            height: 720px;
+            top: -200px;
+            right: -180px;
+            background: radial-gradient(circle, #00a99d, transparent 68%);
+            animation: blobDrift 16s ease-in-out infinite;
+        }
+
+        .amb-2 {
+            width: 540px;
+            height: 540px;
+            bottom: 5%;
+            left: -160px;
+            background: radial-gradient(circle, #162255, transparent 68%);
+            animation: blobDrift 20s ease-in-out infinite reverse;
+        }
+
+        .grid-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-image: linear-gradient(rgba(0, 169, 157, .03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 169, 157, .03) 1px, transparent 1px);
+            background-size: 56px 56px;
+            mask-image: radial-gradient(ellipse 75% 75% at 50% 50%, black, transparent);
+            -webkit-mask-image: radial-gradient(ellipse 75% 75% at 50% 50%, black, transparent);
+        }
+
+        @keyframes blobDrift {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            33% {
+                transform: translate(28px, -18px) scale(1.04);
+            }
+
+            66% {
+                transform: translate(-18px, 14px) scale(.96);
+            }
+        }
+
+        /* Header & Footer matching original design */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(24px) saturate(1.5);
+            background: rgba(7, 16, 31, .82);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            height: 62px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            font-size: .65rem;
+            font-weight: 700;
+            color: var(--text-3);
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            transition: color .2s;
+            border-right: 1px solid var(--border);
+            padding-right: 1.2rem;
+            margin-right: 1.2rem;
+        }
+
+        .back-btn:hover {
+            color: var(--teal-lt);
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-logo {
+            height: 22px;
+            width: auto;
+            opacity: .92;
+        }
+
+        .header-sep {
+            width: 1px;
+            height: 20px;
+            background: var(--border);
+        }
+
+        .header-label {
+            font-size: .7rem;
+            font-weight: 500;
+            color: var(--text-3);
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 2.2rem 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .footer-logo {
+            height: 18px;
+            width: auto;
+            opacity: 1;
+        }
+
+        .footer-text {
+            font-size: .71rem;
+            color: var(--text-3);
+            line-height: 1.6;
+        }
+
+        .footer-right {
+            font-size: .66rem;
+            color: var(--text-3);
+            text-align: right;
+            line-height: 1.65;
+        }
+
+        @media (max-width: 700px) {
+
+            .header-label,
+            .header-sep {
+                display: none;
+            }
+
+            .header-inner,
+            .footer-inner {
+                padding: 0 1rem;
+            }
+        }
+
+        .scene {
+            flex: 1;
+            perspective: 1500px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+            /* Prevent scrolling on touch screens when interacting with the card */
+            touch-action: none;
+        }
+
+        .card-tracker {
+            /* Responsive sizing: max 540px, max 85% of width, AND prevents height overflow in landscape (60vh * aspect ratio) */
+            width: min(540px, 85vw, 60vh * 1.585);
+            aspect-ratio: 1011 / 638;
+            position: relative;
+            transform-style: preserve-3d;
+            will-change: transform;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .card-flipper {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.85s cubic-bezier(0.2, 0.8, 0.2, 1);
+            /* Dynamically calculated border-radius based on aspect ratio */
+            border-radius: calc(min(540px, 85vw, 60vh * 1.585) * 0.03758);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+
+        /* The flip state triggered by click/tap */
+        .card-flipper.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            overflow: hidden;
+            background-color: #fff;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.55), 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Z-Depth for the thick plastic look */
+        .card-front {
+            transform: translateZ(0.5px);
+        }
+
+        .card-back {
+            transform: rotateY(180deg) translateZ(0.5px);
+        }
+
+        .card-face img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            pointer-events: none;
+        }
+
+        /* Glare / Specular highlight system */
+        .glare-container {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            overflow: hidden;
+            pointer-events: none;
+            mix-blend-mode: soft-light;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        /* Active glare on hover OR touch */
+        .scene:hover .glare-container,
+        .scene:active .glare-container {
+            opacity: 1;
+        }
+
+        .glare {
+            position: absolute;
+            width: 250%;
+            height: 250%;
+            top: -75%;
+            left: -75%;
+            background: linear-gradient(115deg,
+                    transparent 0%,
+                    rgba(0, 0, 0, 0.15) 35%,
+                    rgba(255, 255, 255, 0.65) 50%,
+                    rgba(0, 0, 0, 0.15) 65%,
+                    transparent 100%);
+            transform: translate(var(--gx, 0%), var(--gy, 0%));
+            will-change: transform;
+        }
+
+        /* UI Hint styling */
+        .interaction-hint {
+            margin-top: 3rem;
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 0.8rem 1.5rem;
+            border-radius: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.7);
+            pointer-events: none;
+        }
+
+        .interaction-hint i {
+            color: var(--teal-lt);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="ambient" aria-hidden="true">
+        <div class="amb-blob amb-1"></div>
+        <div class="amb-blob amb-2"></div>
+        <div class="amb-blob amb-3"></div>
+        <div class="grid-bg"></div>
+    </div>
+
+    <header class="site-header" role="banner">
+        <div class="header-inner">
+            <div class="header-left">
+                <a href="../index.html" class="back-btn" title="Zurück zum Projekt-Hub">
+                    <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Hub
+                </a>
+                <div class="header-brand">
+                    <img src="../assets/logo-eurobahn-weiss.svg" alt="eurobahn" class="header-logo"
+                        onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Eurobahn_logo.svg/1024px-Eurobahn_logo.svg.png'" />
+                    <div class="header-sep" aria-hidden="true"></div>
+                    <span class="header-label">3D Visualisierung</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="scene" id="scene">
+
+        <div class="card-tracker" id="tracker" role="button" aria-label="Karte wenden">
+            <div class="card-flipper" id="flipper">
+
+                <!-- Vorderseite -->
+                <div class="card-face card-front">
+                    <img src="../assets/card_front.png" alt="Vorderseite: eurobahn Mitarbeiterausweis"
+                        onerror="this.src='https://placehold.co/1011x638/1e293b/ffffff?text=card_front.png'">
+                    <div class="glare-container">
+                        <div class="glare" id="glare-f"></div>
+                    </div>
+                </div>
+
+                <!-- Rückseite -->
+                <div class="card-face card-back">
+                    <img src="../assets/card_back.png" alt="Rückseite: eurobahn Mitarbeiterausweis"
+                        onerror="this.src='https://placehold.co/1011x638/1e293b/ffffff?text=card_back.png'">
+                    <div class="glare-container">
+                        <div class="glare" id="glare-b"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="interaction-hint">
+            <span>Neigen</span>
+            <span style="opacity:0.25">|</span>
+            <span>Klicken zum Wenden</span>
+        </div>
+
+    </main>
+
+    <footer role="contentinfo">
+        <div class="footer-inner">
+            <div class="footer-left">
+                <img src="../assets/logo-eurobahn-weiss.svg" alt="eurobahn" class="footer-logo"
+                    onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Eurobahn_logo.svg/1024px-Eurobahn_logo.svg.png'" />
+                <div class="footer-text">
+                    <strong style="color:var(--text-2);">High Fidelity Render</strong><br />
+                    eurobahn GmbH &amp; Co. KG
+                </div>
+            </div>
+            <div class="footer-right">
+                Damon Connor Wohlgemuth-Link<br />
+                Auszubildender Triebfahrzeugführer · 2026
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const scene = document.getElementById('scene');
+        const tracker = document.getElementById('tracker');
+        const flipper = document.getElementById('flipper');
+        const glareF = document.getElementById('glare-f');
+        const glareB = document.getElementById('glare-b');
+
+        // Handle Flip on Click / Tap
+        tracker.addEventListener('click', () => {
+            flipper.classList.toggle('is-flipped');
+        });
+
+        // Physics Variables
+        let targetX = 0, targetY = 0;
+        let currentX = 0, currentY = 0;
+        const maxTilt = 15;
+
+        // Touch and Mouse tracking
+        function handleMove(e) {
+            // Get coordinates (supports both mouse and touch)
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+            const rect = scene.getBoundingClientRect();
+            const x = clientX - rect.left;
+            const y = clientY - rect.top;
+
+            // Normalize coordinates (-1 to 1)
+            const normX = (x / rect.width) * 2 - 1;
+            const normY = (y / rect.height) * 2 - 1;
+
+            targetX = normY * -maxTilt;
+            targetY = normX * maxTilt;
+        }
+
+        function handleReset() {
+            targetX = 0;
+            targetY = 0;
+        }
+
+        // Event Listeners for Mouse
+        scene.addEventListener('mousemove', handleMove);
+        scene.addEventListener('mouseleave', handleReset);
+
+        // Event Listeners for Touch (Mobile/Tablet)
+        scene.addEventListener('touchmove', handleMove);
+        scene.addEventListener('touchend', handleReset);
+
+        // Linear Interpolation (Lerp) for buttery smooth momentum
+        function lerp(start, end, factor) {
+            return start + (end - start) * factor;
+        }
+
+        // Animation Loop (GPU accelerated)
+        function animate() {
+            currentX = lerp(currentX, targetX, 0.06);
+            currentY = lerp(currentY, targetY, 0.06);
+
+            // Apply tilt to the tracker
+            tracker.style.transform = `rotateX(${currentX}deg) rotateY(${currentY}deg)`;
+
+            // Calculate dynamic glare movement
+            const glareTranslateX = currentY * -1.5;
+            const glareTranslateY = currentX * -1.5;
+
+            // Apply glare to both sides (inverted on the back)
+            glareF.style.transform = `translate(${glareTranslateX}%, ${glareTranslateY}%)`;
+            glareB.style.transform = `translate(${-glareTranslateX}%, ${glareTranslateY}%)`;
+
+            requestAnimationFrame(animate);
+        }
+
+        // Start Engine
+        animate();
+    </script>
+
+</body>
+
+</html>

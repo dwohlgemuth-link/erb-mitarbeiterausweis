@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projekt-Hub | eurobahn Mitarbeiterausweis 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #07101f;
+            /* eurobahn deep background */
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Background Effects */
+        .ambient-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.15;
+            animation: drift 20s ease-in-out infinite alternate;
+        }
+
+        .blob-1 {
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, #00a99d, transparent 70%);
+        }
+
+        .blob-2 {
+            bottom: -20%;
+            right: -10%;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, #1d337a, transparent 70%);
+            animation-delay: -5s;
+        }
+
+        /* Subtle Grid Overlay */
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-image: linear-gradient(rgba(0, 169, 157, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 169, 157, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+            -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+        }
+
+        @keyframes drift {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate(5%, 5%) scale(1.05);
+            }
+        }
+
+        /* Card Hover Effects */
+        .hub-card {
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .hub-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(0, 169, 157, 0.3);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 169, 157, 0.1);
+        }
+
+        .hub-card:hover .card-icon {
+            transform: scale(1.1);
+            color: #4ab1c6;
+        }
+
+        .card-icon {
+            transition: all 0.4s ease;
+        }
+
+        /* Header from konzept/index.html */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(24px) saturate(1.5);
+            background: rgba(7, 16, 31, .82);
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        .header-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            height: 62px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            font-size: .65rem;
+            font-weight: 700;
+            color: #62748e;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            transition: color .2s;
+            border-right: 1px solid rgba(255, 255, 255, .08);
+            padding-right: 1.2rem;
+            margin-right: 1.2rem;
+        }
+
+        .back-btn:hover {
+            color: #2ec4b9;
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-logo {
+            height: 22px;
+            width: auto;
+            opacity: .92;
+        }
+
+        .header-sep {
+            width: 1px;
+            height: 20px;
+            background: rgba(255, 255, 255, .08);
+        }
+
+        .header-label {
+            font-size: .7rem;
+            font-weight: 500;
+            color: #62748e;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 1.75rem;
+        }
+
+        .header-nav a {
+            font-size: .72rem;
+            font-weight: 500;
+            color: #62748e;
+            letter-spacing: .05em;
+            transition: color .2s;
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+        }
+
+        .header-nav a:hover {
+            color: #2ec4b9;
+        }
+
+        .header-nav a i {
+            font-size: .62rem;
+        }
+
+        /* Hero (from konzept) */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 2rem 5rem;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: .6rem;
+            background: rgba(0, 169, 157, .09);
+            border: 1px solid rgba(0, 169, 157, .28);
+            border-radius: 100px;
+            padding: .42rem 1.2rem;
+            font-size: .68rem;
+            font-weight: 700;
+            color: #2ec4b9;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            margin-bottom: 2.4rem;
+        }
+
+        .hero-logo {
+            margin-bottom: 2.6rem;
+        }
+
+        .hero-logo img {
+            height: 42px;
+            width: auto;
+            margin: 0 auto;
+        }
+
+        .hero-h1 {
+            font-size: clamp(2.4rem, 6vw, 4.8rem);
+            font-weight: 900;
+            line-height: 1.04;
+            letter-spacing: -.03em;
+            color: #f0f4ff;
+            margin-bottom: .9rem;
+        }
+
+        .hero-sub {
+            margin-top: 1.5rem;
+            font-size: 1.03rem;
+            font-weight: 300;
+            color: #a8b8d8;
+            max-width: 540px;
+            line-height: 1.82;
+        }
+
+        /* Footer matching konzept/index.html */
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, .08);
+            padding: 2.2rem 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .footer-logo {
+            height: 18px;
+            width: auto;
+            opacity: 1;
+        }
+
+        .footer-text {
+            font-size: .71rem;
+            color: #62748e;
+            line-height: 1.6;
+        }
+
+        .footer-right {
+            font-size: .66rem;
+            color: #62748e;
+            text-align: right;
+            line-height: 1.65;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen relative flex flex-col selection:bg-[#4ab1c6] selection:text-white">
+
+    <!-- Background Elements -->
+    <div class="ambient-blob blob-1"></div>
+    <div class="ambient-blob blob-2"></div>
+    <div class="bg-grid"></div>
+
+    <!-- SITE HEADER (matches konzept) -->
+    <header class="site-header" role="banner">
+        <div class="header-inner">
+            <div class="header-left">
+                <div class="header-brand">
+                    <img src="assets/logo-eurobahn-weiss.svg" alt="eurobahn" class="header-logo"
+                        onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Eurobahn_logo.svg/1024px-Eurobahn_logo.svg.png'" />
+                    <div class="header-sep" aria-hidden="true"></div>
+                    <span class="header-label">Projekt-Hub 2026</span>
+                </div>
+            </div>
+            <nav class="header-nav" aria-label="Abschnitte">
+                <a href="konzept/index.html"><i class="fa-solid fa-book-open" aria-hidden="true"></i><span
+                        class="hidden sm:inline">Konzept</span></a>
+                <a href="visualisierung/index.html"><i class="fa-solid fa-box" aria-hidden="true"></i><span
+                        class="hidden sm:inline">Visualisierung</span></a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO (moved content) -->
+    <section class="hero" aria-labelledby="hero-h1">
+        <div style="display:flex;flex-direction:column;align-items:center;">
+            <div class="hero-logo">
+                <img src="assets/logo-eurobahn-weiss.svg" alt="eurobahn"
+                    onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Eurobahn_logo.svg/1024px-Eurobahn_logo.svg.png'" />
+            </div>
+            <div class="hero-badge">
+                Projekt-Hub &nbsp;·&nbsp; 2026
+            </div>
+            <h1 class="hero-h1" id="hero-h1">
+                Mitarbeiterausweis<br /><span
+                    style="background:linear-gradient(118deg,#2ec4b9 0%,#5de8e0 55%,#aaefec 100%);-webkit-background-clip:text;color:transparent;">Next
+                    Generation</span>
+            </h1>
+            <p class="hero-sub">
+                Zentraler Einstiegspunkt für die Konzeptdokumentation, interaktive Visualisierungen und Prototypen.
+            </p>
+        </div>
+    </section>
+
+    <main class="relative z-10 w-full max-w-6xl mx-auto px-6 pb-20 flex-1 flex flex-col justify-center">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+
+            <!-- Card 1: Hauptkonzept -->
+            <a href="konzept/index.html"
+                class="hub-card flex flex-col h-full rounded-2xl p-8 group relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <i data-lucide="book-open" class="w-24 h-24 text-white"></i>
+                </div>
+                <div
+                    class="w-14 h-14 rounded-xl bg-gradient-to-br from-[#1d337a] to-[#0f1e4a] border border-white/10 flex items-center justify-center mb-6 shadow-lg">
+                    <i data-lucide="layout-template" class="w-7 h-7 text-white card-icon"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-white mb-3">Modernisierungskonzept</h2>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6 max-w-[85%]">
+                    Die vollständige Landingpage mit allen Informationen zur Informationsarchitektur, ISO-Normen und
+                    technischen Spezifikationen.
+                </p>
+                <div class="flex items-center text-[#4ab1c6] text-sm font-semibold mt-auto pt-4">
+                    <span>Dokumentation öffnen</span>
+                    <i data-lucide="arrow-right"
+                        class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </a>
+
+            <!-- Card 2: 3D Visualisierung -->
+            <a href="visualisierung/index.html"
+                class="hub-card flex flex-col h-full rounded-2xl p-8 group relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <i data-lucide="box" class="w-24 h-24 text-white"></i>
+                </div>
+                <div
+                    class="w-14 h-14 rounded-xl bg-gradient-to-br from-[#00a99d] to-[#0f1e4a] border border-white/10 flex items-center justify-center mb-6 shadow-lg">
+                    <i data-lucide="rotate-3d" class="w-7 h-7 text-white card-icon"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-white mb-3">3D Visualisierung</h2>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6 max-w-[85%]">
+                    Interaktives 3D-Modell der Karte mit dynamischer Lichtberechnung zur perfekten Darstellung der
+                    Haptik und Oberfläche.
+                </p>
+                <div class="flex items-center text-[#4ab1c6] text-sm font-semibold mt-auto pt-4">
+                    <span>Ansicht starten</span>
+                    <i data-lucide="arrow-right"
+                        class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </a>
+
+            <!-- Card 3: Design Rationale (Inaktiv) -->
+            <div
+                class="flex flex-col h-full rounded-2xl p-8 relative overflow-hidden bg-white/5 border border-white/10 opacity-50 cursor-not-allowed">
+                <div class="absolute top-0 right-0 p-6 opacity-10">
+                    <i data-lucide="microscope" class="w-24 h-24 text-white"></i>
+                </div>
+                <div
+                    class="w-14 h-14 rounded-xl bg-slate-800 border border-white/10 flex items-center justify-center mb-6">
+                    <i data-lucide="pen-tool" class="w-7 h-7 text-white"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-white mb-3">Design Architektur</h2>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6 max-w-[85%]">
+                    Interaktive "Deep Dive" Erklärung zu allen UI/UX-Entscheidungen, Typografie-Wahlen und
+                    Security-Layern auf der Karte.
+                </p>
+                <div class="flex items-center text-slate-500 text-sm font-bold mt-auto pt-4 uppercase tracking-wide">
+                    <i data-lucide="lock" class="w-4 h-4 mr-2"></i>
+                    <span>In Entwicklung</span>
+                </div>
+            </div>
+
+            <!-- Card 4: CMS Dashboard (Inaktiv) -->
+            <div
+                class="flex flex-col h-full rounded-2xl p-8 relative overflow-hidden bg-white/5 border border-white/10 opacity-50 cursor-not-allowed">
+                <div class="absolute top-0 right-0 p-6 opacity-10">
+                    <i data-lucide="server" class="w-24 h-24 text-white"></i>
+                </div>
+                <div
+                    class="w-14 h-14 rounded-xl bg-slate-800 border border-white/10 flex items-center justify-center mb-6">
+                    <i data-lucide="contact-2" class="w-7 h-7 text-white"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-white mb-3">Ausweiserstellung (CMS)</h2>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6 max-w-[85%]">
+                    Prototyp des internen HR-Verwaltungssystems mit Live-Dateneingabe und dynamischer Print-Vorschau in
+                    Echtzeit.
+                </p>
+                <div class="flex items-center text-slate-500 text-sm font-bold mt-auto pt-4 uppercase tracking-wide">
+                    <i data-lucide="lock" class="w-4 h-4 mr-2"></i>
+                    <span>In Entwicklung</span>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer role="contentinfo">
+        <div class="footer-inner">
+            <div class="footer-left">
+                <img src="assets/logo-eurobahn-weiss.svg" alt="eurobahn" class="footer-logo"
+                    onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Eurobahn_logo.svg/1024px-Eurobahn_logo.svg.png'" />
+                <div class="footer-text">
+                    <strong style="color:#a8b8d8;">Projekt-Hub — Interner Konzeptentwurf</strong><br />
+                    eurobahn GmbH &amp; Co. KG
+                </div>
+            </div>
+            <div class="footer-right">
+                Damon Connor Wohlgemuth-Link<br />
+                Auszubildender Triebfahrzeugführer · 2026
+            </div>
+        </div>
+    </footer>
+    <!-- Initialize Icons -->
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
